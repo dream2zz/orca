@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure(2) do |config|
+
+    config.vm.box = "centos"
+    config.vm.box_url = "/root/boxes/CentOS-7.box"
+
+    config.vm.define "server" do |server|
+        server.vm.hostname = "server"
+        server.vm.network "forwarded_port", guest: 80, host: 10080, host_ip: "0.0.0.0"
+        server.vm.network "forwarded_port", guest: 443, host: 10443, host_ip: "0.0.0.0"
+        server.vm.provider "virtualbox" do |v|
+            v.gui = false
+            v.name = "server"
+            v.cpus = "4"
+            v.memory = "8192"
+        end
+    end
+  
+    config.vm.define "node01" do |node01|
+        node01.vm.hostname = "node01"
+        node01.vm.network "forwarded_port", guest: 30000, host: 10501, host_ip: "0.0.0.0"
+        node01.vm.provider "virtualbox" do |v|
+            v.gui = false
+            v.name = "node01"
+            v.cpus = "8"
+            v.memory = "16384"
+        end
+    end
+    config.vm.define "node02" do |node02|
+        node02.vm.hostname = "node02"
+        node02.vm.network "forwarded_port", guest: 30000, host: 10502, host_ip: "0.0.0.0"
+        node02.vm.provider "virtualbox" do |v|
+            v.gui = false
+            v.name = "node02"
+            v.cpus = "8"
+            v.memory = "16384"
+        end
+    end
+    config.vm.define "node03" do |node03|
+        node03.vm.hostname = "node03"
+        node03.vm.network "forwarded_port", guest: 30000, host: 10503, host_ip: "0.0.0.0"
+        node03.vm.provider "virtualbox" do |v|
+            v.gui = false
+            v.name = "node03"
+            v.cpus = "8"
+            v.memory = "16384"
+        end
+    end
+
+end
